@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
+import java.util.concurrent.RunnableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,21 @@ public class MainActivity extends AppCompatActivity {
         helloTV.setOnClickListener(onClickListener);
 
         new LongOperation().execute("");
+    }
+
+    private class CheckRate implements Runnable {
+        @Override
+        public void run() {
+            GetJson getJson = new GetJson();
+            TextView txt = (TextView) findViewById(R.id.hello_tv);
+            while (true) {
+                String rate = getJson.getRate();
+                try {
+                    Thread.sleep(30000);
+                } catch (Exception e) {}
+                txt.setText(String.format(Locale.ENGLISH, "%(.2f", Double.parseDouble(rate))); 
+            }
+        }
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {
