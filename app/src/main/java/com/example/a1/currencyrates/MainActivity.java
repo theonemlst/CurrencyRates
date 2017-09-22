@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
-import java.util.concurrent.RunnableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
         helloBTN.setOnClickListener(onClickListener);
         helloTV.setOnClickListener(onClickListener);
 
-        new LongOperation().execute("");
+        helloBTN.setEnabled(false);
+
+        //new LongOperation().execute("");
+        Thread thread = new Thread(new CheckRate());
+        thread.start();
     }
 
     private class CheckRate implements Runnable {
@@ -35,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
             TextView txt = (TextView) findViewById(R.id.hello_tv);
             while (true) {
                 String rate = getJson.getRate();
+                //txt.setText(String.format(Locale.ENGLISH, "%(.2f", Double.parseDouble(rate)));
+                new LongOperation().execute(rate);
                 try {
                     Thread.sleep(30000);
                 } catch (Exception e) {}
-                txt.setText(String.format(Locale.ENGLISH, "%(.2f", Double.parseDouble(rate))); 
             }
         }
     }
@@ -47,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            GetJson getJson = new GetJson();
-            String rate = getJson.getRate();
+            //GetJson getJson = new GetJson();
+            //String rate = getJson.getRate();
             //helloTV.setText(rate);
-            return rate;
+            return params[0];
         }
 
         @Override
