@@ -14,7 +14,7 @@ class GetJson {
 		String line;
 		String price = "";
 		String result = "";
-		PrintWriter os = null;
+	//	PrintWriter os = null;
 
 		try {
 			url = new URL("https://api.cryptonator.com/api/ticker/eth-usd");
