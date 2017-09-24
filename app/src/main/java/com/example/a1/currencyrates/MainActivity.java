@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private String currency = "eth";
     private String second = "usd";
 
+    private Thread thread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         toggleButton2.setOnCheckedChangeListener(onCheckedChangeListener);
         toggleButton3.setOnCheckedChangeListener(onCheckedChangeListener);
 
-        Thread thread = new Thread(new CheckRate());
+        thread = new Thread(new CheckRate());
         thread.start();
     }
 
@@ -69,16 +71,19 @@ public class MainActivity extends AppCompatActivity {
                           if (isChecked || !toggleButton2.isChecked() && !toggleButton3.isChecked())
                             setToggleButtons(true, false, false);
                             currency = "sc";
+                            thread.interrupt();
                           break;
                       case R.id.toggleButton2 :
                           if (isChecked || !toggleButton1.isChecked() && !toggleButton3.isChecked())
                             setToggleButtons(false, true, false);
                             currency = "eth";
+                            thread.interrupt();
                           break;
                       case R.id.toggleButton3 :
                           if (isChecked || !toggleButton1.isChecked() && !toggleButton2.isChecked())
                             setToggleButtons(false, false, true);
                             currency = "xmr";
+                            thread.interrupt();
                           break;
                       default:
                           break;
@@ -103,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 updateRate();
                 try {
                     Thread.sleep(RATE_UPDATE_DELAY);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    //Thread.currentThread().interrupt();
+                }
             }
         }
     }
