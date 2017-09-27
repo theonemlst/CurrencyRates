@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Оповещения:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/sc_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sc  "
+        android:textSize="24sp"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/sc_threshold"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_alignBottom="@+id/sc_cb"
+        android:layout_toRightOf="@+id/sc_cb"
+        android:layout_toEndOf="@+id/sc_cb"/>
+
+
+    <CheckBox
+        android:id="@+id/eth_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="eth "
+        android:textSize="24sp"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/sc_cb"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/eth_threshold"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_alignBottom="@+id/eth_cb"
+        android:layout_toRightOf="@+id/eth_cb"
+        android:layout_toEndOf="@+id/eth_cb"/>
+
+    <CheckBox
+        android:id="@+id/xmr_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xmr"
+        android:textSize="24sp"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/eth_cb"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/xmr_threshold"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_alignBottom="@+id/xmr_cb"
+        android:layout_toRightOf="@+id/xmr_cb"
+        android:layout_toEndOf="@+id/xmr_cb">
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

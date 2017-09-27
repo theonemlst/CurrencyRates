@@ -1,9 +1,15 @@
 package com.example.a1.currencyrates;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -13,6 +19,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final Context context = this;
+
     private static final long RATE_UPDATE_DELAY = 30000;
 
     private TextView helloTV;
@@ -20,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private ToggleButton toggleButton1;
     private ToggleButton toggleButton2;
     private ToggleButton toggleButton3;
+
+    private Button button;
 
     private String path = "https://api.cryptonator.com/api/ticker/";
     private String currency = "eth";
@@ -39,9 +49,13 @@ public class MainActivity extends AppCompatActivity {
         toggleButton2 = (ToggleButton) findViewById(R.id.toggleButton2);
         toggleButton3 = (ToggleButton) findViewById(R.id.toggleButton3);
 
+        button = (Button) findViewById(R.id.Button);
+
         toggleButton1.setOnCheckedChangeListener(onCheckedChangeListener);
         toggleButton2.setOnCheckedChangeListener(onCheckedChangeListener);
         toggleButton3.setOnCheckedChangeListener(onCheckedChangeListener);
+
+        button.setOnClickListener(onClickListener);
 
         thread = new Thread(new CheckRate());
         thread.start();
@@ -62,6 +76,38 @@ public class MainActivity extends AppCompatActivity {
         //txt.setText(String.format(Locale.ENGLISH, "%(.2f", Double.parseDouble(rate)));
         new LongOperation().execute(rate);
     }
+
+    private CompoundButton.OnClickListener onClickListener = new CompoundButton.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Получаем вид с файла prompt.xml, который применим для диалогового окна:
+            LayoutInflater li = LayoutInflater.from(context);
+            View promptsView = li.inflate(R.layout.prompt, null);
+
+            //Создаем AlertDialog
+            AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+
+            //Настраиваем prompt.xml для нашего AlertDialog:
+            mDialogBuilder.setView(promptsView);
+
+            //Настраиваем отображение поля для ввода текста в открытом диалоге:
+            final EditText userInput = (EditText) promptsView.findViewById(R.id.eth_threshold);
+
+            //Настраиваем сообщение в диалоговом окне:
+            mDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("OK",
+                            null)
+                    .setNegativeButton("Отмена",
+                            null);
+
+            //Создаем AlertDialog:
+            AlertDialog alertDialog = mDialogBuilder.create();
+
+            //и отображаем его:
+            alertDialog.show();
+        }
+    };
 
     private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
